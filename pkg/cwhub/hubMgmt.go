@@ -737,7 +737,7 @@ func DownloadItem(target Item, tdir string, overwrite bool, dataFolder string) (
 	}
 	/*check actual file*/
 	if _, err = os.Stat(tdir + "/" + target.RemotePath); !os.IsNotExist(err) {
-		log.Warningf("%s : overwrite", target.Name)
+		log.Debugf("%s : overwrite", target.Name)
 		log.Debugf("target: %s/%s", tdir, target.RemotePath)
 	} else {
 		log.Infof("%s : OK", target.Name)

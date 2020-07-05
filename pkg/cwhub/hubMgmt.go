@@ -396,17 +396,17 @@ func GetHubIdx() error {
 func UpdateHubIdx() error {
 	bidx, err := DownloadHubIdx()
 	if err != nil {
-		log.Fatalf("Unable to download index : %v.", err)
+		return fmt.Errorf("Unable to download index : %v.", err)
 	}
 	ret, err := LoadPkgIndex(bidx)
 	if err != nil {
 		if !errors.Is(err, ReferenceMissingError) {
-			log.Fatalf("Unable to load freshly downloaded index : %v.", err)
+			return fmt.Errorf("Unable to load freshly downloaded index : %v.", err)
 		}
 	}
 	HubIdx = ret
 	if err := LocalSync(); err != nil {
-		log.Fatalf("Failed to sync Hub index with local deployment : %v", err)
+		return fmt.Errorf("Failed to sync Hub index with local deployment : %v", err)
 	}
 	return nil
 }

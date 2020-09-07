@@ -7,37 +7,14 @@ package models
 
 import (
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 )
 
 // DeleteDecisionResponse DeleteDecisionResponse
 //
 // swagger:model DeleteDecisionResponse
-type DeleteDecisionResponse struct {
-
-	// decision id
-	DecisionID string `json:"decision_id,omitempty"`
-}
+type DeleteDecisionResponse []string
 
 // Validate validates this delete decision response
-func (m *DeleteDecisionResponse) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *DeleteDecisionResponse) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *DeleteDecisionResponse) UnmarshalBinary(b []byte) error {
-	var res DeleteDecisionResponse
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
+func (m DeleteDecisionResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }

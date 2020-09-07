@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -19,10 +17,10 @@ import (
 type DecisionsStreamResponse struct {
 
 	// deleted
-	Deleted [][]*GetDecisionsResponse `json:"deleted"`
+	Deleted GetDecisionsResponse `json:"deleted,omitempty"`
 
 	// new
-	New [][]*GetDecisionsResponse `json:"new"`
+	New GetDecisionsResponse `json:"new,omitempty"`
 }
 
 // Validate validates this decisions stream response
@@ -49,24 +47,11 @@ func (m *DecisionsStreamResponse) validateDeleted(formats strfmt.Registry) error
 		return nil
 	}
 
-	for i := 0; i < len(m.Deleted); i++ {
-
-		for ii := 0; ii < len(m.Deleted[i]); ii++ {
-			if swag.IsZero(m.Deleted[i][ii]) { // not required
-				continue
-			}
-
-			if m.Deleted[i][ii] != nil {
-				if err := m.Deleted[i][ii].Validate(formats); err != nil {
-					if ve, ok := err.(*errors.Validation); ok {
-						return ve.ValidateName("deleted" + "." + strconv.Itoa(i) + "." + strconv.Itoa(ii))
-					}
-					return err
-				}
-			}
-
+	if err := m.Deleted.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("deleted")
 		}
-
+		return err
 	}
 
 	return nil
@@ -78,24 +63,11 @@ func (m *DecisionsStreamResponse) validateNew(formats strfmt.Registry) error {
 		return nil
 	}
 
-	for i := 0; i < len(m.New); i++ {
-
-		for ii := 0; ii < len(m.New[i]); ii++ {
-			if swag.IsZero(m.New[i][ii]) { // not required
-				continue
-			}
-
-			if m.New[i][ii] != nil {
-				if err := m.New[i][ii].Validate(formats); err != nil {
-					if ve, ok := err.(*errors.Validation); ok {
-						return ve.ValidateName("new" + "." + strconv.Itoa(i) + "." + strconv.Itoa(ii))
-					}
-					return err
-				}
-			}
-
+	if err := m.New.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("new")
 		}
-
+		return err
 	}
 
 	return nil

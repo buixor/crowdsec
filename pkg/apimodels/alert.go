@@ -18,6 +18,9 @@ import (
 // swagger:model Alert
 type Alert struct {
 
+	// only relevant for GET, ignored in POST requests
+	AlertID string `json:"alert_id,omitempty"`
+
 	// capacity
 	Capacity int32 `json:"capacity,omitempty"`
 

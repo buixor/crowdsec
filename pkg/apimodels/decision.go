@@ -15,6 +15,9 @@ import (
 // swagger:model Decision
 type Decision struct {
 
+	// only relevant for GET operations
+	DecisionID string `json:"decision_id,omitempty"`
+
 	// duration
 	Duration string `json:"duration,omitempty"`
 

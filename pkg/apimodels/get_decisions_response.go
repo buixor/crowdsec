@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -14,61 +16,30 @@ import (
 // GetDecisionsResponse GetDecisionsResponse
 //
 // swagger:model GetDecisionsResponse
-type GetDecisionsResponse struct {
-
-	// decision
-	Decision *Decision `json:"decision,omitempty"`
-
-	// decision id
-	DecisionID string `json:"decision_id,omitempty"`
-}
+type GetDecisionsResponse []*Decision
 
 // Validate validates this get decisions response
-func (m *GetDecisionsResponse) Validate(formats strfmt.Registry) error {
+func (m GetDecisionsResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateDecision(formats); err != nil {
-		res = append(res, err)
+	for i := 0; i < len(m); i++ {
+		if swag.IsZero(m[i]) { // not required
+			continue
+		}
+
+		if m[i] != nil {
+			if err := m[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName(strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *GetDecisionsResponse) validateDecision(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Decision) { // not required
-		return nil
-	}
-
-	if m.Decision != nil {
-		if err := m.Decision.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("decision")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *GetDecisionsResponse) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *GetDecisionsResponse) UnmarshalBinary(b []byte) error {
-	var res GetDecisionsResponse
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
 	return nil
 }

@@ -4,41 +4,29 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/crowdsecurity/crowdsec/pkg/models"
 	qs "github.com/google/go-querystring/query"
 )
 
 type DecisionsService service
 
 type DecisionsListOpts struct {
-	scope_equals *string `"json:scope"`
-	value_equals *string `"json:value"`
-	type_equals  *string `"json:type"`
+	Scope_equals *string `url:"scope,omitempty"`
+	Value_equals *string `url:"value,omitempty"`
+	Type_equals  *string `url:"type,omitempty"`
 	ListOpts
 }
 
 type DecisionsDeleteOpts struct {
-	scope_equals *string `"json:scope"`
-	value_equals *string `"json:value"`
-	type_equals  *string `"json:type"`
+	Scope_equals *string `url:"scope,omitempty"`
+	Value_equals *string `url:"value,omitempty"`
+	Type_equals  *string `url:"type,omitempty"`
 	ListOpts
 }
 
-/*should be define by swagger or smth ?*/
-type Decision struct {
-	ID            *int64
-	decisionType  *string
-	decisionScope *string
-	decisionValue *string
-}
-
-type Decisions struct {
-	TotalCount int         `"json:count"`
-	Decisions  []*Decision `"json:decisions"`
-}
-
 //to demo query arguments
-func (s *DecisionsService) List(ctx context.Context, opts DecisionsListOpts) (*Decisions, *Response, error) {
-	var decisions Decisions
+func (s *DecisionsService) List(ctx context.Context, opts DecisionsListOpts) (*models.GetDecisionsResponse, *Response, error) {
+	var decisions models.GetDecisionsResponse
 	params, err := qs.Values(opts)
 	if err != nil {
 		return nil, nil, err

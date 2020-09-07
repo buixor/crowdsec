@@ -16,7 +16,7 @@ type ApiClient struct {
 	UserAgent string
 	/*exposed Services*/
 	Decisions *DecisionsService
-	// Alerts    *ApiAlerts
+	Alerts    *AlertsService
 	// Auth      *ApiAuth
 	// Consensus *ApiConsensus
 }
